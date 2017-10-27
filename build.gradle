@@ -1,4 +1,4 @@
-group 'SyncGooglePhotos'
+group 'AccessGoogleService'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
