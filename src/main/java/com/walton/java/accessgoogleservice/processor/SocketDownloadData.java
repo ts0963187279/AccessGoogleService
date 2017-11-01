@@ -28,12 +28,10 @@ import java.net.URL;
 
 public class SocketDownloadData implements Mission<URL>{
     private int port;
-    private String fileName;
-    private String albumName;
-    public SocketDownloadData(String fileName, String albumName){
+    private File file;
+    public SocketDownloadData(File file){
         port = 443;
-        this.fileName = fileName;
-        this.albumName = albumName;
+        this.file = file;
     }
     public Void execute(URL url){
         String hostName = url.getHost();
@@ -42,8 +40,6 @@ public class SocketDownloadData implements Mission<URL>{
         try {
             OutputStream outputStream = socket.getOutputStream();
             new SendHttpGetRequest(url).execute(outputStream);
-            CreateDownloadFile createDownloadFile = new CreateDownloadFile("./google photos/" + albumName);
-            File file = createDownloadFile.execute(fileName);
             GetHttpResponseData getHttpResponseData = new GetHttpResponseData();
             new HttpWriteOnFile(getHttpResponseData.execute(socket),file).execute(null);
             outputStream.close();

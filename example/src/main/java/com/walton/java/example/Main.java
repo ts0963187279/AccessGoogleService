@@ -46,6 +46,10 @@ public class Main{
             String authCode;
             System.out.println("entry Auth code");
             authCode = new Scanner(System.in).nextLine();
+            String userAccount;
+            System.out.println("entry userAccount");
+            userAccount = new Scanner(System.in).nextLine();
+            oAuth2Data.setUserName(userAccount);
             GetRefreshToken getRefreshToken = new GetRefreshToken(oAuth2Data);
             refreshToken = getRefreshToken.execute(authCode);
             refreshTokenStorage.update(oAuth2Data.getUserName(),refreshToken);
@@ -59,5 +63,6 @@ public class Main{
 
         DownLoadImage downLoadImage = new DownLoadImage(oAuth2Data.getUserName());
         downLoadImage.execute(picasawebService);
+
     }
 }

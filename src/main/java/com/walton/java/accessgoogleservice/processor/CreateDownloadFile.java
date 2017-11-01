@@ -33,9 +33,13 @@ public class CreateDownloadFile implements Mission<String> {
         }
     }
     @Override
-    public File execute(String fileName) throws IOException{
+    public File execute(String fileName){
         File file = new File(path + "/" + fileName);
-        file.createNewFile();
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return file;
     }
 }

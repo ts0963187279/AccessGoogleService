@@ -20,6 +20,7 @@ import com.walton.java.accessgoogleservice.module.AlbumInfo;
 import com.walton.java.accessgoogleservice.module.PhotoInfo;
 import poisondog.core.Mission;
 
+import java.io.File;
 import java.util.List;
 
 public class DownLoadImage implements Mission<PicasawebService>{
@@ -31,8 +32,9 @@ public class DownLoadImage implements Mission<PicasawebService>{
         List<AlbumInfo> albumInfos = getAlbumInfos.execute(picasawebService);
         for(AlbumInfo albumInfo : albumInfos){
             for(PhotoInfo photoInfo : albumInfo.getPhotoInfos()){
-                SocketDownloadData socketDownloadData = new SocketDownloadData(photoInfo.getPhotoName()
-                        , albumInfo.getAlbumName());
+                CreateDownloadFile createDownloadFile = new CreateDownloadFile("./google photos/" + albumInfo.getAlbumName());
+                File imageFile = createDownloadFile.execute(photoInfo.getPhotoName());
+                SocketDownloadData socketDownloadData = new SocketDownloadData(imageFile);
                 socketDownloadData.execute(photoInfo.getUrl());
             }
         }

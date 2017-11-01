@@ -13,11 +13,8 @@ public class CreateDownLoadFileTest {
         File expected = new File("./test");
         Assert.assertEquals(expected,createDownloadFile.execute("test"));
         expected.delete();
-    }
-    @Test
-    public void testExecuteWithPath() throws IOException {
-        CreateDownloadFile createDownloadFile = new CreateDownloadFile("test");
-        File expected = new File("./test/test");
+        expected = new File("./test/test");
+        createDownloadFile = new CreateDownloadFile("test");
         Assert.assertEquals(expected,createDownloadFile.execute("test"));
     }
 }
