@@ -60,10 +60,5 @@ public class Main{
         GoogleCredential credential = getGoogleCredential.execute(accessToken);
         PicasawebService picasawebService = new PicasawebService("SyncGooglePhotos");
         picasawebService.setOAuth2Credentials(credential);
-
-        DownloadImage downloadImage = new DownloadImage(oAuth2Data.getUserName());
-        downloadImage.setDownloadPath("./Google/");
-        downloadImage.execute(picasawebService);
-
     }
 }
