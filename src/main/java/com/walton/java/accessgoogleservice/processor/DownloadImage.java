@@ -18,24 +18,29 @@ package com.walton.java.accessgoogleservice.processor;
 import com.google.gdata.client.photos.PicasawebService;
 import com.walton.java.accessgoogleservice.module.AlbumInfo;
 import com.walton.java.accessgoogleservice.module.PhotoInfo;
+import com.walton.java.socket.processor.DownloadData;
 import poisondog.core.Mission;
 
 import java.io.File;
 import java.util.List;
 
-public class DownLoadImage implements Mission<PicasawebService>{
+public class DownloadImage implements Mission<PicasawebService>{
     private GetAlbumInfos getAlbumInfos;
-    public DownLoadImage(String userName){
+    private String downloadPath = "./google photos/";
+    public DownloadImage(String userName){
         getAlbumInfos = new GetAlbumInfos(userName);
+    }
+    public void setDownloadPath(String downloadPath){
+        this.downloadPath = downloadPath;
     }
     public Void execute(PicasawebService picasawebService){
         List<AlbumInfo> albumInfos = getAlbumInfos.execute(picasawebService);
         for(AlbumInfo albumInfo : albumInfos){
             for(PhotoInfo photoInfo : albumInfo.getPhotoInfos()){
-                CreateDownloadFile createDownloadFile = new CreateDownloadFile("./google photos/" + albumInfo.getAlbumName());
+                CreateDownloadFile createDownloadFile = new CreateDownloadFile(downloadPath + albumInfo.getAlbumName());
                 File imageFile = createDownloadFile.execute(photoInfo.getPhotoName());
-                SocketDownloadData socketDownloadData = new SocketDownloadData(imageFile);
-                socketDownloadData.execute(photoInfo.getUrl());
+                DownloadData downloadData = new DownloadData(imageFile);
+                downloadData.execute(photoInfo.getUrl());
             }
         }
         return null;

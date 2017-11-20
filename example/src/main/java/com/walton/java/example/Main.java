@@ -61,8 +61,9 @@ public class Main{
         PicasawebService picasawebService = new PicasawebService("SyncGooglePhotos");
         picasawebService.setOAuth2Credentials(credential);
 
-        DownLoadImage downLoadImage = new DownLoadImage(oAuth2Data.getUserName());
-        downLoadImage.execute(picasawebService);
+        DownloadImage downloadImage = new DownloadImage(oAuth2Data.getUserName());
+        downloadImage.setDownloadPath("./Google/");
+        downloadImage.execute(picasawebService);
 
     }
 }
