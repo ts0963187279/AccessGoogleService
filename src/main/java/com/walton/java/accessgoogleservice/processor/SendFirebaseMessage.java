@@ -1,5 +1,6 @@
 package com.walton.java.accessgoogleservice.processor;
 
+import com.walton.java.accessgoogleservice.module.FirebaseMessage;
 import com.walton.java.socket.processor.GetSSLSocket;
 import poisondog.core.Mission;
 
@@ -9,14 +10,14 @@ import java.net.MalformedURLException;
 import java.net.Socket;
 import java.net.URL;
 
-public class SendFirebaseMessage implements Mission<String> {
+public class SendFirebaseMessage implements Mission<FirebaseMessage> {
     private String authorizationKey;
     private String registrationToken;
     public SendFirebaseMessage(String authorizationKey, String registrationToken){
         this.authorizationKey = authorizationKey;
         this.registrationToken = registrationToken;
     }
-    public Void execute(String message){
+    public Void execute(FirebaseMessage firebaseMessage){
         URL url = null;
         try {
             url = new URL("https://fcm.googleapis.com/fcm/send");
@@ -25,8 +26,8 @@ public class SendFirebaseMessage implements Mission<String> {
         }
         String body = "{\r\n" +
                 "  \"notification\": {\r\n" +
-                "    \"title\": \"need Auth Code\",\r\n" +
-                "    \"body\": \""+message+"\"\r\n" +
+                "    \"title\": \""+firebaseMessage.getTitle()+"\",\r\n" +
+                "    \"body\": \""+firebaseMessage.getBody()+"\"\r\n" +
                 "  },\r\n" +
                 "  \"to\" : \""+registrationToken+"\"\r\n" +
                 "}\r\n";
